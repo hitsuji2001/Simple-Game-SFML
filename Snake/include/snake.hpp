@@ -33,6 +33,7 @@ public:
 
     //Functions
     void draw(sf::RenderWindow &window);
+    void addBody();
 };
 
 #endif

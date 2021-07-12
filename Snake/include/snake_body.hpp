@@ -39,6 +39,8 @@ public:
 
     //Function
     void drawToWindow(sf::RenderWindow &window);
+    void move();
+    void follow();
 };
 
 #endif

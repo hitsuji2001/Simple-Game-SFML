@@ -58,3 +58,11 @@ void Snake::draw(sf::RenderWindow &window)
         s->drawToWindow(window);
     }
 }
+
+void Snake::addBody()
+{
+    SnakeBody *body;
+    body->setPosition(this->snakeBody.at(this->length - 1)->getPosition() + sf::Vector2f(25.f, 25.f));
+    this->snakeBody.push_back(body);
+    this->length++;
+}

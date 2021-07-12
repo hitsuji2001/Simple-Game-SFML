@@ -67,6 +67,8 @@ void Game::pollEvents()
         case sf::Event::KeyPressed:
             if(this->event.key.code == sf::Keyboard::Escape)
                 this->window->close();
+            if(this->event.key.code == sf::Keyboard::Enter)
+                this->snake->addBody();
             break;
         default:
             break;

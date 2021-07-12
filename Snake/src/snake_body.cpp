@@ -37,8 +37,8 @@ void SnakeBody::initializeTexture()
 void SnakeBody::initializeSprite()
 {
     this->sprite.setTexture(this->texture);
-    if(this->isHead) this->sprite.setScale(0.1f, 0.1f);
-    else this->sprite.setScale(0.5f, 0.5f);
+    if(this->isHead) this->sprite.setScale(0.05f, 0.05f);
+    else this->sprite.setScale(0.25f, 0.25f);
 }
 
 
@@ -62,7 +62,7 @@ sf::Sprite SnakeBody::getSprite()
 void SnakeBody::setPosition(sf::Vector2f pos)
 {
     this->position = pos;
-    this->sprite.setPosition(pos);
+    this->sprite.setPosition(this->position);
 }
 
 void SnakeBody::setTexture(sf::Texture texture)
@@ -81,4 +81,14 @@ void SnakeBody::setSprite(sf::Sprite sprite)
 void SnakeBody::drawToWindow(sf::RenderWindow &window)
 {
     window.draw(this->sprite);
+}
+
+void SnakeBody::move()
+{
+
+}
+
+void SnakeBody::follow()
+{
+
 }
