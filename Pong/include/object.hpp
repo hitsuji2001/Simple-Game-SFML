@@ -1,7 +1,11 @@
 #ifndef __OBJECT_HPP__
 #define __OBJECT_HPP__
 
-#include "SFML/Graphics.hpp"
+#include <SFML/Graphics.hpp>
+
+#include "window.hpp"
+
+#define VECTOR_ORIGIN sf::Vector2f(0.0f, 0.0f)
 
 class Object
 {
@@ -21,23 +25,28 @@ public:
     virtual ~Object();
 
 public:
-    //Setters
-    void SetPosition(sf::Vector2f &pos);
-    void SetVelocity(sf::Vector2f &vel);
-    void SetAcceleration(sf::Vector2f &acc);
-
-public:
     //Getters
     sf::Vector2f GetPosition();
     sf::Vector2f GetVelocity();
     sf::Vector2f GetAcceleration();
 
 public:
-    //Public Functions:
+    //Setters
+    void SetPosition(sf::Vector2f pos);
+    void SetVelocity(sf::Vector2f vel);
+    void SetAcceleration(sf::Vector2f acc);
+
+public:
+    //Public Functions
     void MoveUp(float amount);
     void MoveDown(float amount);
     void MoveLeft(float amount);
     void MoveRight(float amount);
+    void Move(sf::Vector2f vec);
+    void RandomMove();
+    void FlipVelocity();
+    void FlipVelocityX();
+    void FlipVelocityY();
 };
 
 #endif

@@ -8,17 +8,14 @@
 
 #define REGTANGLE_WIDTH 10.0f
 #define REGTANGLE_HEIGTH WINDOW_HEIGHT / 7.0f
-#define FIRST_PADDLE_POSITION sf::Vector2f((1.0f / 10.0f) * WINDOW_WIDTH - REGTANGLE_WIDTH, WINDOW_HEIGHT / 2.0f)
-#define SECOND_PADDLE_POSITION sf::Vector2f((9.0f / 10.0f) * WINDOW_WIDTH - REGTANGLE_WIDTH, WINDOW_HEIGHT / 2.0f)
-
+#define FIRST_PADDLE_POSITION sf::Vector2f((1.0f / 10.0f) * WINDOW_WIDTH - REGTANGLE_WIDTH, WINDOW_HEIGHT / 2.0f - REGTANGLE_HEIGTH / 2.0f)
+#define SECOND_PADDLE_POSITION sf::Vector2f((9.0f / 10.0f) * WINDOW_WIDTH - REGTANGLE_WIDTH, WINDOW_HEIGHT / 2.0f - REGTANGLE_HEIGTH / 2.0f)
+#define PADDLE_MOVEMENT_SPEED 3.5f
 
 class Paddle : public Object
 {
 private:
     //Variables
-    sf::Vector2f Position;
-    float Velocity;
-
     sf::RectangleShape v_Paddle;
     sf::Color PaddleColor;
 private:
@@ -36,17 +33,13 @@ public:
 
 public:
     //Getters
-    sf::Vector2f GetPosition();
-    float GetVelocity();
+    sf::RectangleShape GetPaddleShape();
 public:
     //Setters
-    void SetPosition(sf::Vector2f &pos);
-    void SetVelocity(float &vel);
 public:
     //Public Functions:
+    void Update();
     void ForceInBound(bool up, bool down);
-    void MoveUp(float amount);
-    void MoveDown(float amount);
     void Draw(sf::RenderTarget &target);
 };
 

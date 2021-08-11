@@ -91,17 +91,28 @@ void Game::Update()
 {
     this->PollEvents();
 
-    this->ball->Move(this->ball->GetVelocity());
-
-    this->ball->FlipVectorVelocity();
-
     // this->ball->MoveLeft(1.1f);
 
     // for(auto &b : Balls)
     //     b->RandomMove();
 
-    if(sf::Keyboard::isKeyPressed(sf::Keyboard::Up)) this->Paddle_1->MoveUp(this->Paddle_1->GetVelocity());
-    else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Down)) this->Paddle_1->MoveDown(this->Paddle_1->GetVelocity());
+    this->ball->Move(this->ball->GetVelocity());
+
+    this->ball->Update();
+
+    if(this->ball->CollideWithPaddle(*this->Paddle_1) or this->ball->CollideWithPaddle(*this->Paddle_2))
+        this->ball->FlipVelocity();
+    
+    if(this->ball->HitSomething(*this->Paddle_1) or this->ball->HitSomething(*this->Paddle_2))
+    {
+        int r = rand() % 256;
+        int g = rand() % 256;
+        int b = rand() % 256;
+        sf::Color color(r, g, b);
+        this->ball->SetBallColor(color);
+    }
+
+    this->Paddle_1->Update();
 }
 
 void Game::Render()

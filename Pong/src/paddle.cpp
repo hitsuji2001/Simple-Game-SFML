@@ -3,8 +3,8 @@
 //Private Functions
 void Paddle::IntializeVariables()
 {
-    this->Position = sf::Vector2f(ORIGIN);
-    this->Velocity = 3.5f;
+    this->SetPosition(sf::Vector2f(ORIGIN));
+    this->SetVelocity(sf::Vector2f(0.0f, PADDLE_MOVEMENT_SPEED));
     this->PaddleColor = sf::Color::White;
 }
 
@@ -12,7 +12,7 @@ void Paddle::InitializePaddle()
 {
     this->v_Paddle = sf::RectangleShape(sf::Vector2f(REGTANGLE_WIDTH, REGTANGLE_HEIGTH));
 
-    this->v_Paddle.setPosition(this->Position);
+    this->v_Paddle.setPosition(this->GetPosition());
     this->v_Paddle.setFillColor(this->PaddleColor);
 }
 
@@ -27,8 +27,8 @@ Paddle::Paddle(sf::Vector2f originalPos)
 {
     this->IntializeVariables();
 
-    this->Position = originalPos;
-    this->SetPosition(this->Position);
+    this->SetPosition(originalPos);
+    this->SetPosition(this->GetPosition());
 
     this->InitializePaddle();
 }
@@ -39,68 +39,43 @@ Paddle::~Paddle()
 }
 
 //Getters
-sf::Vector2f Paddle::GetPosition()
+sf::RectangleShape Paddle::GetPaddleShape()
 {
-    return this->Position;
+    return this->v_Paddle;
 }
-
-float Paddle::GetVelocity()
-{
-    return this->Velocity;
-}
-
 //Setters
-void Paddle::SetPosition(sf::Vector2f &pos)
-{
-    this->Position = pos;
-
-    this->v_Paddle.setPosition(this->Position);
-}
-
-void Paddle::SetVelocity(float &vel)
-{
-    this->Velocity = vel;
-}
 
 //Public Functions:
+void Paddle::Update()
+{
+    if(sf::Keyboard::isKeyPressed(sf::Keyboard::Up) or sf::Keyboard::isKeyPressed(sf::Keyboard::W)) this->MoveUp(this->GetVelocity().y);
+    if(sf::Keyboard::isKeyPressed(sf::Keyboard::Down) or sf::Keyboard::isKeyPressed(sf::Keyboard::S)) this->MoveDown(this->GetVelocity().y);
+
+    this->ForceInBound(true, true);
+
+    this->v_Paddle.setPosition(this->GetPosition());
+}
+
 void Paddle::ForceInBound(bool up, bool down)
 {
+    sf::Vector2f pos = this->GetPosition();
     if(up)
     {
-        if(this->Position.y <= 0.0f)
+        if(this->GetPosition().y <= 0.0f)
         {
-            this->Position.y = 0.0f;
-            this->SetPosition(this->Position);
+            pos.y = 0.0f;
+            this->SetPosition(pos);
         }
     }
     if(down)
     {
-        if(this->Position.y >= WINDOW_HEIGHT - REGTANGLE_HEIGTH)
+        if(this->GetPosition().y >= WINDOW_HEIGHT - REGTANGLE_HEIGTH)
         {
-            this->Position.y = WINDOW_HEIGHT - REGTANGLE_HEIGTH;
-            this->SetPosition(this->Position);
+            pos.y = WINDOW_HEIGHT - REGTANGLE_HEIGTH;
+            this->SetPosition(pos);
         }
     }
 }
-
-void Paddle::MoveUp(float amount)
-{
-    this->Position.y -= amount;
-
-    this->ForceInBound(true, false);
-
-    this->SetPosition(this->Position);
-}
-
-void Paddle::MoveDown(float amount)
-{
-    this->Position.y += amount;
-
-    this->ForceInBound(false, true);
-
-    this->SetPosition(this->Position);
-}
-
 void Paddle::Draw(sf::RenderTarget &target)
 {
     target.draw(this->v_Paddle);
